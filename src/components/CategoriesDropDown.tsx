@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
-import { typeProduct } from '../routes/Details'
+import { typeProduct } from '../pages/Details'
 
 export type typeCategories = {
   id: string;
@@ -40,7 +40,7 @@ const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void 
     <Listbox value={selected} onChange={getCategory}>
       {({ open }) => (
         <>
-          <div className='realtive p-2 w-full'>
+          <div className='relative p-2 w-full'>
             <Listbox.Button className='relative w-full border-none outline-non text-sm text-gray-base'>
               <span className='flex items-center'>
                 {selected === null && <span className='ml-3 block truncate'>Categories</span> }
@@ -50,7 +50,7 @@ const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void 
                 <ChevronDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
               </span>
             </Listbox.Button>
-
+        
             <Transition
               show={open}
               as={Fragment}
@@ -58,7 +58,7 @@ const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void 
               leaveFrom='opacity-100'
               leaveTo='opacity-0'
             >
-              <Listbox.Options className='z-10 absolute mt-6 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
+              <Listbox.Options className='absolute right-0 mt-4 w-full bg-white shadow-lg rounded-lg text-base ring-1 ring-black ring-opacity-5 focus:outline-none text-sm'>
                 {categories.map((category) => (
                   <Listbox.Option
                     key={category.id}

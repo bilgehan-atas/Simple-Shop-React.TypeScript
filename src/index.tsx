@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Listings from './routes/Listings';
-import Details from './routes/Details';
-import AddItem from './routes/AddItem';
+import Listings from './pages/Listings';
+import Details from './pages/Details';
+import AddItem from './pages/AddItem';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,8 +13,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<App />}>
-        <Route path='Listings' element={<Listings />} />
+      <Route element={<App />}>
+        <Route path='/' element={<Listings />} />
         <Route path='Details' element={<Details />}>
           <Route path=':ItemId' />
         </Route>
@@ -36,7 +36,3 @@ root.render(
     </Routes>
   </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

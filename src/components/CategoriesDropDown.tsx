@@ -1,7 +1,8 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
-import { typeProduct } from '../pages/Details'
+import { Fragment, useState } from "react"
+import { Listbox, Transition } from "@headlessui/react"
+import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid"
+import { typeProduct } from "../pages/Details"
+import GetCategories from "../api/GetCategories"
 
 export type typeCategories = {
   id: string;
@@ -9,27 +10,24 @@ export type typeCategories = {
 };
 
 function classNames(...classes:any) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ")
 }
 
 const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void }> = (props) => {
+  const [isloaded, setIsLoaded] = useState(false);
   const [selected, setSelected] = useState<any>(null)
   const [categories, setCategories] = useState<typeCategories[]>([]);
-
-  async function fetchCategories() {
-      const response = await fetch(
-        'https://62286b649fd6174ca82321f1.mockapi.io/case-study/categories/'
-      );
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error();
-      }
-      setCategories(data);
+  
+  if (!isloaded) {
+    GetCategories()
+      .then((result) => {
+        setCategories(result);
+        setIsLoaded(true);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const getCategory = (e:typeProduct[]) => {
     setSelected(e);
@@ -40,41 +38,41 @@ const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void 
     <Listbox value={selected} onChange={getCategory}>
       {({ open }) => (
         <>
-          <div className='relative p-2 w-full'>
-            <Listbox.Button className='relative w-full border-none outline-non text-sm text-gray-base'>
-              <span className='flex items-center'>
-                {selected === null && <span className='ml-3 block truncate'>Categories</span> }
-                {selected !== null && <span className='ml-3 block truncate'>{selected.name}</span> }
+          <div className="relative p-2 w-full">
+            <Listbox.Button className="relative w-full border-none outline-non text-sm text-gray-base">
+              <span className="flex items-center">
+                {selected === null && <span className="ml-3 block truncate">Categories</span> }
+                {selected !== null && <span className="ml-3 block truncate">{selected.name}</span> }
               </span>
-              <span className='ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
-                <ChevronDownIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
+              <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
         
             <Transition
               show={open}
               as={Fragment}
-              leave='transition ease-in duration-100'
-              leaveFrom='opacity-100'
-              leaveTo='opacity-0'
+              leave="transition ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
             >
-              <Listbox.Options className='absolute right-0 mt-4 w-full bg-white shadow-lg rounded-lg text-base ring-1 ring-black ring-opacity-5 focus:outline-none text-sm'>
+              <Listbox.Options className="absolute right-0 mt-4 w-full bg-white shadow-lg rounded-lg text-base ring-1 ring-black ring-opacity-5 focus:outline-none text-sm overflow-hidden">
                 {categories.map((category) => (
                   <Listbox.Option
                     key={category.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        active ? "text-white bg-indigo-600" : "text-gray-900",
+                        "cursor-default select-none relative py-2 pl-3 pr-9"
                       )
                     }
                     value={category}
                   >
                     {({ selected, active }) => (
                       <>
-                        <div className='flex items-center'>
+                        <div className="flex items-center">
                           <span
-                            className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                            className={classNames(selected ? "font-semibold" : "font-normal", "ml-3 block truncate")}
                           >
                             {category.name}
                           </span>
@@ -83,11 +81,11 @@ const CategoriesDropDown: React.FC<{getCategory: (param: typeProduct[]) => void 
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
-                              'absolute inset-y-0 right-0 flex items-center pr-4'
+                              active ? "text-white" : "text-indigo-600",
+                              "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}
                           >
-                            <CheckIcon className='h-5 w-5' aria-hidden='true' />
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
                         ) : null}
                       </>

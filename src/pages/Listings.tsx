@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CategoriesDropDown from "../components/CategoriesDropDown";
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import { typeProduct } from "./Details";
 import GetListing from "../api/GetListing";
+import ItemCard from "../components/ItemCard";
 
 let loadingText: string = "p-8 font-bold text-center";
 
@@ -22,7 +23,6 @@ const Listings = () => {
         setItemsByCategory(result);
         setIsLoaded(true);
         setError(null);
-        console.log(result);
       })
       .catch((error) => {
         setError("Obi-wan Kenobi felt a great disturbance in the force...");
@@ -42,8 +42,7 @@ const Listings = () => {
 
   const getCategory = (e: any) => {
     const newItems = items.filter(
-      (item) =>
-        !e || item?.category.toLowerCase().includes(e.name.toLowerCase())
+      (item) => !e || item?.category.toLowerCase() === e.name.toLowerCase()
     );
     setItemsByCategory(newItems);
     setFilteredItems(newItems);
@@ -76,29 +75,7 @@ const Listings = () => {
           )}
           {error !== null && <p className={loadingText}>{error}</p>}
           {isloaded === true && filteredItems.length > 0 && (
-            <div className="m-auto grid grid-cols-1 gap-y-24 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredItems.map((element: any, i: any) => {
-                return (
-                  <div className="w-32 h-48 m-auto" key={i}>
-                    <Link to={`/details/${element.id}`} key={element.id}>
-                      <div className="bg-white rounded-lg w-32 h-48 overflow-hidden">
-                        <img
-                          src={element.avatar}
-                          alt={element.name}
-                          className="object-scale-down object-center w-32 h-48"
-                        />
-                      </div>
-                      <p className="mt-2 font-medium max-h-4 leading-4 overflow-hidden">
-                        {element.name}
-                      </p>
-                      <p className="text-center mt-2 font-medium">
-                        $ {element.price}
-                      </p>
-                    </Link>
-                  </div>
-                );
-              })}
-            </div>
+            <ItemCard itemlist={filteredItems} />
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostProduct from "../api/PostProduct";
-import { typeNewProduct, typeCategories} from "../types";
+import { typeNewProduct, typeCategories } from "../types";
 import GetCategories from "../api/GetCategories";
 
 const AddItem = () => {
@@ -68,77 +68,79 @@ const AddItem = () => {
     "text-sm text-gray-base w-full p-2 mb-5 rounded mb-2 outline-none drop-shadow-md";
 
   return (
-    <div className="m-16">
-      <div className="flex flex-col items-center justify-center">
-        {error !== null && (
-          <p className="flex flex-col items-center justify-center">{error}</p>
-        )}
-        {error === null && isAdded === false && isSubmitted === true && (
-          <p className="flex flex-col items-center justify-center">
-            Working on it. Please wait.
-          </p>
-        )}
-        {error === null && isAdded === true && (
-          <p className="flex flex-col items-center justify-center">
-            A new item has been added!
-          </p>
-        )}
-        <p className="font-semibold p-8 text-xl">Create Product</p>
-        <form onSubmit={submitHandler}>
-          <input
-            id="name"
-            ref={nameRef}
-            type="text"
-            placeholder="Product Name"
-            className={formStyle}
-          />
-          <textarea
-            id="description"
-            ref={descRef}
-            placeholder="Description"
-            className={formStyle}
-          />
-          <input
-            id="avatar"
-            ref={avatarRef}
-            type="text"
-            placeholder="Image URL"
-            className={formStyle}
-          />
-          <select
-            defaultValue="default"
-            id="categories"
-            ref={catRef}
-            className={formStyle}
-          >
-            <option value="default" hidden>
-              Select a Category
-            </option>
-            {categories.map((element: typeCategories, i: number) => (
-              <option key={i} value={element.name}>
-                {element.name}
+    <div className="mt-16">
+      <div className="m-auto w-4/5 md:w-1/2 xl:w-1/3 ">
+        <div className="m-auto flex flex-col items-center justify-center">
+          {error !== null && (
+            <p className="flex flex-col items-center justify-center">{error}</p>
+          )}
+          {error === null && isAdded === false && isSubmitted === true && (
+            <p className="flex flex-col items-center justify-center">
+              Working on it. Please wait.
+            </p>
+          )}
+          {error === null && isAdded === true && (
+            <p className="flex flex-col items-center justify-center">
+              A new item has been added!
+            </p>
+          )}
+          <p className="font-semibold p-8 text-xl">Create Product</p>
+          <form onSubmit={submitHandler}>
+            <input
+              id="name"
+              ref={nameRef}
+              type="text"
+              placeholder="Product Name"
+              className={formStyle}
+            />
+            <textarea
+              id="description"
+              ref={descRef}
+              placeholder="Description"
+              className={formStyle}
+            />
+            <input
+              id="avatar"
+              ref={avatarRef}
+              type="text"
+              placeholder="Image URL"
+              className={formStyle}
+            />
+            <select
+              defaultValue="default"
+              id="categories"
+              ref={catRef}
+              className={formStyle}
+            >
+              <option value="default" hidden>
+                Select a Category
               </option>
-            ))}
-          </select>
-          <input
-            onKeyPress={(event) => {
-              if (!/[0-9.]/.test(event.key)) {
-                event.preventDefault();
-              }
-            }}
-            id="price"
-            ref={priceRef}
-            type="text"
-            placeholder="Price"
-            className={formStyle}
-          />
-          <button
-            type="submit"
-            className="bg-white w-full rounded p-2 mb-4 outline-none drop-shadow-md"
-          >
-            SUBMIT
-          </button>
-        </form>
+              {categories.map((element: typeCategories, i: number) => (
+                <option key={i} value={element.name}>
+                  {element.name}
+                </option>
+              ))}
+            </select>
+            <input
+              onKeyPress={(event) => {
+                if (!/[0-9.]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+              id="price"
+              ref={priceRef}
+              type="text"
+              placeholder="Price"
+              className={formStyle}
+            />
+            <button
+              type="submit"
+              className="bg-white w-full rounded p-2 mb-4 outline-none drop-shadow-md"
+            >
+              SUBMIT
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

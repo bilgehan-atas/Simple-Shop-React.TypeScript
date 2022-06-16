@@ -32,9 +32,10 @@ const CategoriesDropDown: React.FC<{
     });
   }
 
-  const getCategory = (e: typeProduct[]) => {
+  const getCategory = (e: any) => {
     setSelected(e);
     props.getCategory(e);
+    console.log(e)
   };
 
   return (

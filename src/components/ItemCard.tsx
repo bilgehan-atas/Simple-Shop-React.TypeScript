@@ -12,6 +12,10 @@ const ItemCard: React.FC<{ itemlist: typeProduct[] }> = (props) => {
               <div className="bg-white rounded-lg overflow-hidden md:w-32 md:h-48">
                 <img
                   src={element.avatar}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src="https://www.webtures.com/backend/images/no-image.jpeg";
+                  }}
                   alt={element.name}
                   className="object-scale-down object-center p-12 md:w-32 md:h-48 md:p-2"
                 />

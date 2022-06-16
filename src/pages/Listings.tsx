@@ -42,7 +42,7 @@ const Listings = () => {
 
   const getCategory = (e: any) => {
     const newItems = items.filter(
-      (item) => !e || item?.category.toLowerCase() === e.name.toLowerCase()
+      (item) => item?.category === e.name
     );
     setItemsByCategory(newItems);
     setFilteredItems(newItems);

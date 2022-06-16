@@ -1,21 +1,33 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostProduct from "../api/PostProduct";
-import { typeNewProduct, } from "../types"
-
-
+import { typeNewProduct, typeCategories} from "../types";
+import GetCategories from "../api/GetCategories";
 
 const AddItem = () => {
   let developerEmail: string = "bilgehan.atas@gmail.com";
   const [error, setError] = useState<any>(null);
   const [isAdded, setIsAdded] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isloaded, setIsLoaded] = useState(false);
+  const [categories, setCategories] = useState<typeCategories[]>([]);
 
   const nameRef = useRef<HTMLInputElement | null>(null);
   const descRef = useRef<HTMLTextAreaElement | null>(null);
   const avatarRef = useRef<HTMLInputElement | null>(null);
   const catRef = useRef<HTMLSelectElement | null>(null);
   const priceRef = useRef<HTMLInputElement | null>(null);
+
+  if (!isloaded) {
+    GetCategories().then((result) => {
+      if (result.error) {
+        setError("Couldn't fetch categories");
+      } else {
+        setCategories(result);
+        setIsLoaded(true);
+      }
+    });
+  }
 
   let timer = null;
   let navigate = useNavigate();
@@ -93,14 +105,20 @@ const AddItem = () => {
             placeholder="Image URL"
             className={formStyle}
           />
-          <select defaultValue="default" id="categories" ref={catRef} className={formStyle}>
+          <select
+            defaultValue="default"
+            id="categories"
+            ref={catRef}
+            className={formStyle}
+          >
             <option value="default" hidden>
               Select a Category
             </option>
-            <option value="Electronic">Electronic</option>
-            <option value="Furnitures">Furnitures</option>
-            <option value="Clothing">Clothing</option>
-            <option value="Accessories">Accessories</option>
+            {categories.map((element: typeCategories, i: number) => (
+              <option key={i} value={element.name}>
+                {element.name}
+              </option>
+            ))}
           </select>
           <input
             onKeyPress={(event) => {

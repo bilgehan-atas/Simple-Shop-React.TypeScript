@@ -1,15 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostProduct from "../api/PostProduct";
+import { typeNewProduct, } from "../types"
 
-type newProduct = {
-  name: string;
-  description: string;
-  avatar: string;
-  category: string;
-  price: number;
-  developerEmail: string;
-};
+
 
 const AddItem = () => {
   let developerEmail: string = "bilgehan.atas@gmail.com";
@@ -33,9 +27,10 @@ const AddItem = () => {
       descRef.current?.value !== null &&
       avatarRef.current?.value !== null &&
       catRef.current?.value !== null &&
+      catRef.current?.value !== "default" &&
       priceRef.current?.value !== null
     ) {
-      const newProduct: newProduct = {
+      const newProduct: typeNewProduct = {
         name: nameRef.current?.value!,
         description: descRef.current?.value!,
         avatar: avatarRef.current?.value!,
@@ -98,14 +93,14 @@ const AddItem = () => {
             placeholder="Image URL"
             className={formStyle}
           />
-          <select id="categories" ref={catRef} className={formStyle}>
-            <option value="" disabled selected hidden>
-              Categories
+          <select defaultValue="default" id="categories" ref={catRef} className={formStyle}>
+            <option value="default" hidden>
+              Select a Category
             </option>
-            <option value="electronic">Electronic</option>
-            <option value="furnitures">Furnitures</option>
-            <option value="clothing">Clothing</option>
-            <option value="accessories">Accessories</option>
+            <option value="Electronic">Electronic</option>
+            <option value="Furnitures">Furnitures</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Accessories">Accessories</option>
           </select>
           <input
             onKeyPress={(event) => {

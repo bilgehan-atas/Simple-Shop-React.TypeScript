@@ -1,13 +1,9 @@
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/react/solid";
-import { typeProduct } from "../pages/Details";
+import { typeCategories, typeProduct } from "../types";
 import GetCategories from "../api/GetCategories";
 
-export type typeCategories = {
-  id: string;
-  name: string;
-};
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");

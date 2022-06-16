@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CategoriesDropDown from "../components/CategoriesDropDown";
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import { typeProduct } from "./Details";
+import { typeProduct } from "../types";
 import GetListing from "../api/GetListing";
 import ItemCard from "../components/ItemCard";
 

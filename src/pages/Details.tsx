@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import GetProduct from "../api/GetProduct";
-
-export type typeProduct = {
-  id: number;
-  name: string;
-  avatar: string;
-  price: number;
-  description: string;
-  category: string;
-};
+import { typeProduct } from "../types";
 
 const Details = () => {
   const [item, setItem] = useState<typeProduct | null>(null);

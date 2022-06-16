@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { typeProduct } from "../pages/Details";
+import { typeProduct } from "../types";
 
 const ItemCard: React.FC<{ itemlist: typeProduct[] }> = (props) => {
   return (

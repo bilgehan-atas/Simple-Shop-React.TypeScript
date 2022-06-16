@@ -4,10 +4,10 @@ import PostProduct from "../api/PostProduct";
 
 type newProduct = {
   name: string;
-  price: number;
-  category: string;
   description: string;
   avatar: string;
+  category: string;
+  price: number;
   developerEmail: string;
 };
 
@@ -17,11 +17,11 @@ const AddItem = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const nameRef = useRef<any>("");
-  const descRef = useRef<any>("");
-  const priceRef = useRef<any>("");
-  const catRef = useRef<any>("");
-  const avatarRef = useRef<any>("");
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const descRef = useRef<HTMLTextAreaElement | null>(null);
+  const avatarRef = useRef<HTMLInputElement | null>(null);
+  const catRef = useRef<HTMLSelectElement | null>(null);
+  const priceRef = useRef<HTMLInputElement | null>(null);
 
   let timer = null;
   let navigate = useNavigate();
@@ -29,31 +29,32 @@ const AddItem = () => {
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (
-      nameRef.current.value !== "" &&
-      priceRef.current.value !== "" &&
-      catRef.current.value !== "" &&
-      descRef.current.value !== "" &&
-      avatarRef.current.value !== ""
+      nameRef.current?.value !== null &&
+      descRef.current?.value !== null &&
+      avatarRef.current?.value !== null &&
+      catRef.current?.value !== null &&
+      priceRef.current?.value !== null
     ) {
       const newProduct: newProduct = {
-        name: nameRef.current.value,
-        price: priceRef.current.value,
-        category: catRef.current.value,
-        description: descRef.current.value,
-        avatar: avatarRef.current.value,
+        name: nameRef.current?.value!,
+        description: descRef.current?.value!,
+        avatar: avatarRef.current?.value!,
+        category: catRef.current?.value!,
+        price: parseFloat(priceRef.current?.value!),
         developerEmail: developerEmail,
       };
       setIsSubmitted(true);
-      PostProduct(newProduct).then((result) => {
-        console.log(result)
-        setIsAdded(true);
-        timer = setTimeout(() => navigate("/"), 500)
-      }).catch((error)=> {
-        console.log(error)
-        setError("Obi-wan Kenobi felt a great disturbance in the force...")
-      })
-
-    } else return alert("You have to fill the whole form")
+      PostProduct(newProduct).then((response) => {
+        if (response.error) {
+          console.log(response);
+          setError("Obi-wan Kenobi felt a great disturbance in the API...");
+        } else {
+          console.log(response);
+          setIsAdded(true);
+          timer = setTimeout(() => navigate("/"), 500);
+        }
+      });
+    } else return alert("You have to fill the whole form");
   };
 
   let formStyle: string =
@@ -108,7 +109,7 @@ const AddItem = () => {
           </select>
           <input
             onKeyPress={(event) => {
-              if (!/[0-9,".",","]/.test(event.key)) {
+              if (!/[0-9.]/.test(event.key)) {
                 event.preventDefault();
               }
             }}

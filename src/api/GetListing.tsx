@@ -4,13 +4,13 @@ async function GetListing():Promise<any> {
       "https://62286b649fd6174ca82321f1.mockapi.io/case-study/products"
     );
     const result = await response.json();
-    if (!response.ok) {
-      throw new Error();
+    if (response.ok) {
+      return result;
     }
 
-    return result;
-  } catch (error) {
-    return error;
+    throw new Error();
+  } catch (Error) {
+    return {error: Error};
   }
 }
 

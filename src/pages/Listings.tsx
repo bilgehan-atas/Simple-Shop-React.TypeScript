@@ -18,16 +18,16 @@ const Listings = () => {
   if (!isloaded) {
     GetListing()
       .then((result) => {
-        setItems(result);
-        setFilteredItems(result);
-        setItemsByCategory(result);
-        setIsLoaded(true);
-        setError(null);
+        if (result.error) {
+          setError("Obi-wan Kenobi felt a great disturbance in the API...");
+        } else {
+          setItems(result);
+          setFilteredItems(result);
+          setItemsByCategory(result);
+          setIsLoaded(true);
+          setError(null)
+        }
       })
-      .catch((error) => {
-        setError("Obi-wan Kenobi felt a great disturbance in the force...");
-        console.log(error);
-      });
   }
 
   const filterFunc = (searchTerm: string) => {

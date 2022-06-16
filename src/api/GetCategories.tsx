@@ -1,17 +1,17 @@
-async function GetCategories():Promise<any> {
-    try {
-      const response = await fetch(
-        "https://62286b649fd6174ca82321f1.mockapi.io/case-study/categories/"
-      );
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error();
-      }
-  
+async function GetCategories(): Promise<any> {
+  try {
+    const response = await fetch(
+      "https://62286b649fd6174ca82321f1.mockapi.io/case-study/categories"
+    );
+    const result = await response.json();
+    if (response.ok) {
       return result;
-    } catch (error) {
-      return error;
     }
+
+    throw new Error();
+  } catch (Error) {
+    return {error: Error};
   }
-  
-  export default GetCategories;
+}
+
+export default GetCategories;

@@ -3,7 +3,7 @@
 You need below versions of node and npm:
 
 node version: v16.14.2 \
-npm version: v8.5.0 \
+npm version: v8.5.0 
 
 ## Development Server
 
@@ -27,7 +27,7 @@ In the project directory, you can run:
 
 ### `npm install`
 
-It will install dependencies.\
+It will install dependencies.
 
 ### `npm run build`
 
@@ -36,7 +36,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.\
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## Learn More
 
@@ -50,5 +50,5 @@ To learn React, check out the [React documentation](https://reactjs.org/). \
 
 To learn TypeScript, check out the [TypeScript documentation](https://www.typescriptlang.org/docs/) .\
 
-To learn Tailwind, check out the [Tailwindcss documentation](https://tailwindcss.com/docs/installation) .\
+To learn Tailwind, check out the [Tailwindcss documentation](https://tailwindcss.com/docs/installation) .
 # bilgehan-reactjs
